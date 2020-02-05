@@ -178,8 +178,18 @@ public class Notification extends CordovaPlugin {
         Runnable runnable = new Runnable() {
             public void run() {
 
+                String fontScale = "";
+                try {
+                    Configuration config = this.cordova.getActivity().getResources().getConfiguration();
+                    config.fontScale = 1;
+                    cordova.getActivity().getResources().updateConfiguration(config, cordova.getActivity().getResources().getDisplayMetrics());
+                    fontScale = String.valueOf(cordova.getActivity().getResources().getConfiguration().fontScale);
+                } catch (Exception e) {
+                    fontScale = e.toString();
+                }
+
                 Builder dlg = createDialog(cordova); // new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-                dlg.setMessage(message);
+                dlg.setMessage(fontScale);
                 dlg.setTitle(title);
                 dlg.setCancelable(true);
                 dlg.setPositiveButton(buttonLabel,
